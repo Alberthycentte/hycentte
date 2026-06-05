@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6c63ff"/>
+      <stop offset="100%" stop-color="#00e5a0"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e0e1c"/>
+      <stop offset="100%" stop-color="#13131f"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g2)"/>
+  <rect width="64" height="64" rx="14" fill="url(#g1)" opacity="0.15"/>
+  <!-- H letterform -->
+  <rect x="13" y="16" width="7" height="32" rx="2" fill="url(#g1)"/>
+  <rect x="13" y="28.5" width="20" height="7" rx="2" fill="url(#g1)"/>
+  <rect x="26" y="16" width="7" height="32" rx="2" fill="url(#g1)"/>
+  <!-- C letterform -->
+  <path d="M40 22 Q36 22 36 32 Q36 42 40 42 L46 42 Q50 42 50 38 L50 36 Q50 34 48 34 L44 34 Q42 34 42 32 Q42 30 44 30 L48 30 Q50 30 50 28 L50 26 Q50 22 46 22 Z" fill="url(#g1)" opacity="0.9"/>
+  <!-- accent dot -->
+  <circle cx="51" cy="16" r="4" fill="#00e5a0" opacity="0.9"/>
+</svg>
