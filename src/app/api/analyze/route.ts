@@ -97,46 +97,48 @@ Return ONLY valid JSON (no markdown, no backticks, no explanation) in this exact
   }
 }`
 
-  const apiKey = process.env.GEMINI_API_KEY
+  const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) {
-    return NextResponse.json({ error: 'GEMINI_API_KEY not set in .env.local' }, { status: 500 })
+    return NextResponse.json({ error: 'GROQ_API_KEY not set in .env.local' }, { status: 500 })
   }
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-002:generateContent?key=${apiKey}`,
+      'https://api.groq.com/openai/v1/chat/completions',
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 3000,
-          },
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7,
+          max_tokens: 3000,
+          response_format: { type: 'json_object' },
         }),
       }
     )
 
     if (!response.ok) {
       const err = await response.json()
-      console.error('Gemini error:', err)
+      console.error('Groq error:', err)
       return NextResponse.json(
-        { error: `Gemini API error: ${err?.error?.message || response.statusText}` },
+        { error: `Groq API error: ${err?.error?.message || response.statusText}` },
         { status: 500 }
       )
     }
 
     const data = await response.json()
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || ''
+    const text = data.choices?.[0]?.message?.content || ''
 
-    // Strip any accidental markdown fences
-    const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-    const analysis = JSON.parse(clean)
+    // Parse JSON directly (Groq enforces valid JSON with response_format)
+    const analysis = JSON.parse(text)
 
     return NextResponse.json({ analysis, gigCount: gigs.length })
   } catch (err) {
     console.error('Analysis error:', err)
-    return NextResponse.json({ error: 'Analysis failed. Check your Gemini API key and try again.' }, { status: 500 })
+    return NextResponse.json({ error: 'Analysis failed. Check your Groq API key and try again.' }, { status: 500 })
   }
 }
