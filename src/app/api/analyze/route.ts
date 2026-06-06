@@ -23,77 +23,87 @@ export async function POST(req: NextRequest) {
     return lines.join('\n')
   }).join('\n\n')
 
-  const prompt = `You are a world-class Fiverr SEO strategist and gig optimization expert. Analyze these top-ranking Fiverr gigs${niche ? ` in the "${niche}" niche` : ''} and provide a complete blueprint for someone to create a gig that ranks on page 1 and converts.
+  const prompt = `Analyze these top-ranking Fiverr gigs${niche ? ` in the "${niche}" niche` : ''} and generate complete, publish-ready Fiverr gig content — not suggestions, not templates. Return ONLY valid JSON with zero markdown, zero backticks, zero placeholders, and no explanation. Everything should be ready to copy and paste directly into Fiverr.
 
 TOP-RANKING GIGS DATA:
 ${gigSummary}
 
-Return ONLY valid JSON (no markdown, no backticks, no explanation) in this exact structure:
-
+Use this exact JSON structure:
 {
   "overview": {
-    "titleFormula": {
-      "pattern": "The exact structural pattern top gigs use for their titles",
-      "examples": ["Ready-to-use example title 1", "example 2", "example 3"],
-      "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5", "keyword6"],
-      "tip": "One high-impact actionable insight about titles in this niche"
-    },
-    "tags": {
-      "recommended": ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7"],
-      "explanation": "Why these specific tags dominate in this niche"
-    },
+    "gigTitle": "The exact gig title to use on Fiverr (max 80 chars, keyword-optimized)",
+    "titleAlternatives": ["Alternative title 2", "Alternative title 3"],
+    "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
+    "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
     "competitiveEdge": {
-      "gaps": ["Specific gap 1 no one is filling", "Specific gap 2"],
-      "differentiators": ["Concrete way to stand out 1", "Concrete way to stand out 2"],
-      "summary": "2-3 sentence strategic overview of how to win in this niche"
+      "gaps": ["Gap 1", "Gap 2"],
+      "differentiators": ["Differentiator 1", "Differentiator 2"],
+      "summary": "Strategic summary paragraph"
     }
   },
   "pricing": {
-    "basic":    { "price": "$XX", "label": "package name", "deliverables": ["item1", "item2"], "rationale": "why this works" },
-    "standard": { "price": "$XX", "label": "package name", "deliverables": ["item1", "item2", "item3"], "rationale": "why this is the anchor" },
-    "premium":  { "price": "$XX", "label": "package name", "deliverables": ["item1", "item2", "item3", "item4"], "rationale": "what justifies the top tier" },
-    "strategy": "Big-picture pricing insight based on competition analysis",
-    "extras": ["Common gig extra 1 with suggested price", "Common gig extra 2 with suggested price"]
+    "basic": {
+      "label": "Exact package name e.g. Starter",
+      "price": "$XX",
+      "description": "Exact package description text to paste into Fiverr (1-2 sentences)",
+      "deliverables": ["Exact deliverable line 1", "Exact deliverable line 2"],
+      "deliveryDays": 3,
+      "revisions": 2
+    },
+    "standard": {
+      "label": "Exact package name e.g. Professional",
+      "price": "$XX",
+      "description": "Exact package description text to paste into Fiverr",
+      "deliverables": ["deliverable1", "deliverable2", "deliverable3"],
+      "deliveryDays": 5,
+      "revisions": 3
+    },
+    "premium": {
+      "label": "Exact package name e.g. Elite",
+      "price": "$XX",
+      "description": "Exact package description text to paste into Fiverr",
+      "deliverables": ["deliverable1", "deliverable2", "deliverable3", "deliverable4"],
+      "deliveryDays": 7,
+      "revisions": "Unlimited"
+    },
+    "extras": [
+      { "name": "Exact extra name", "description": "What it includes", "price": "$XX" },
+      { "name": "Exact extra name", "description": "What it includes", "price": "$XX" }
+    ]
   },
-  "descriptionFaq": {
-    "hook": "Attention-grabbing opening line ready to use in first person",
-    "structure": [
-      { "section": "Section name", "content": "What to write here and why" },
-      { "section": "Section name", "content": "What to write here and why" },
-      { "section": "Section name", "content": "What to write here and why" },
-      { "section": "Section name", "content": "What to write here and why" }
-    ],
-    "mustInclude": ["Power phrase 1", "Power phrase 2", "Power phrase 3"],
-    "wordCount": "Recommended range e.g. 350-500 words",
-    "faqTemplates": [
-      { "question": "Common buyer question 1?", "answer": "Suggested answer template" },
-      { "question": "Common buyer question 2?", "answer": "Suggested answer template" },
-      { "question": "Common buyer question 3?", "answer": "Suggested answer template" }
+  "description": {
+    "fullDescription": "The COMPLETE gig description ready to paste into Fiverr. 400-550 words. Written in first person. Includes: opening hook, services breakdown, process explanation, why choose me, and a call to action. Use line breaks and bullet points naturally. No placeholders — everything filled in based on niche analysis.",
+    "faq": [
+      { "question": "Exact FAQ question as it would appear on Fiverr", "answer": "Complete answer text, 2-4 sentences, ready to paste" },
+      { "question": "Question 2", "answer": "Answer 2" },
+      { "question": "Question 3", "answer": "Answer 3" },
+      { "question": "Question 4", "answer": "Answer 4" }
     ]
   },
   "requirements": {
-    "essentials": ["Required info to ask buyer 1", "Required info to ask buyer 2", "Required info 3"],
-    "optionals": ["Nice to have from buyer 1", "Nice to have from buyer 2"],
-    "tips": "How to write requirements that reduce revisions and set clear expectations",
-    "template": "Full ready-to-use requirements section text"
+    "fullRequirementsText": "The complete requirements text to paste into Fiverr, written as a numbered list asking buyers for everything needed to start the project. Specific to the niche. No placeholders.",
+    "items": [
+      { "question": "Exact requirement question to ask buyer", "type": "free_text or multiple_choice", "required": true },
+      { "question": "Question 2", "type": "free_text", "required": true },
+      { "question": "Question 3", "type": "free_text", "required": false }
+    ]
   },
   "gallery": {
-    "imageCount": "Recommended number of images",
-    "videoRecommended": true,
-    "slides": [
-      { "slide": 1, "purpose": "Hero / first impression", "layout": "Layout description", "content": "What text/visuals to put here" },
-      { "slide": 2, "purpose": "Services offered", "layout": "Layout description", "content": "What to show" },
-      { "slide": 3, "purpose": "Process / how it works", "layout": "Layout description", "content": "What to show" },
-      { "slide": 4, "purpose": "Results / proof", "layout": "Layout description", "content": "What to show" },
-      { "slide": 5, "purpose": "CTA / trust builder", "layout": "Layout description", "content": "What to show" }
-    ],
-    "colorPalette": ["#hexcolor1", "#hexcolor2", "#hexcolor3"],
-    "styleNotes": "Visual style analysis of what top gigs use in their thumbnails",
-    "heroImagePrompt": "An extremely detailed hyper-realistic AI image generation prompt for the main gig thumbnail. Include subject, lighting, camera angle, background, color grading, mood, render style (photorealistic 8K sharp focus), and suggested text overlays. Make it specific enough for Midjourney or DALL-E 3.",
+    "heroImagePrompt": "An extremely detailed, hyper-realistic AI image generation prompt for the MAIN gig thumbnail. Include: exact subject matter specific to the niche, lighting setup (e.g. soft diffused studio light with warm rim light), camera lens and angle, background details, color grading style, mood/atmosphere, render quality (photorealistic, 8K, sharp focus, professional photography). Also describe any text overlays or UI mockup elements to composite on top. Long enough to produce a professional result in Midjourney v6 or DALL-E 3.",
     "additionalPrompts": [
-      "Detailed prompt for a portfolio/results slide image",
-      "Detailed prompt for a process/about me slide image"
-    ]
+      "Full detailed prompt for slide 2 — showing portfolio/results/before-after specific to this niche",
+      "Full detailed prompt for slide 3 — showing the process or a professional workspace relevant to this niche",
+      "Full detailed prompt for slide 4 — showing happy client or deliverable result"
+    ],
+    "slides": [
+      { "slide": 1, "purpose": "Hero thumbnail", "exactHeadline": "Exact bold headline text to overlay on image", "exactSubline": "Exact subline text" },
+      { "slide": 2, "purpose": "Services/Portfolio", "exactHeadline": "Exact headline", "exactSubline": "Exact subline" },
+      { "slide": 3, "purpose": "Process", "exactHeadline": "Exact headline", "exactSubline": "Exact subline" },
+      { "slide": 4, "purpose": "Social proof / results", "exactHeadline": "Exact headline", "exactSubline": "Exact subline" },
+      { "slide": 5, "purpose": "CTA", "exactHeadline": "Exact headline", "exactSubline": "Exact subline" }
+    ],
+    "colorPalette": ["#hex1", "#hex2", "#hex3"],
+    "fontRecommendation": "Specific font pairing recommendation for the thumbnail"
   }
 }`
 
@@ -113,9 +123,15 @@ Return ONLY valid JSON (no markdown, no backticks, no explanation) in this exact
         },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
-          messages: [{ role: 'user', content: prompt }],
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a professional Fiverr gig copywriter and SEO expert. Generate complete, publish-ready gig content — not suggestions or templates. Everything you write should be ready to copy and paste directly into Fiverr with zero editing. Be specific, confident, and write as if you are the seller.',
+            },
+            { role: 'user', content: prompt },
+          ],
           temperature: 0.7,
-          max_tokens: 3000,
+          max_tokens: 4000,
           response_format: { type: 'json_object' },
         }),
       }
@@ -131,10 +147,8 @@ Return ONLY valid JSON (no markdown, no backticks, no explanation) in this exact
     }
 
     const data = await response.json()
-    const text = data.choices?.[0]?.message?.content || ''
-
-    // Parse JSON directly (Groq enforces valid JSON with response_format)
-    const analysis = JSON.parse(text)
+    const rawContent = data.choices?.[0]?.message?.content
+    const analysis = typeof rawContent === 'string' ? JSON.parse(rawContent) : rawContent
 
     return NextResponse.json({ analysis, gigCount: gigs.length })
   } catch (err) {
